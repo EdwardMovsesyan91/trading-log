@@ -19,6 +19,7 @@ import { createTrade } from "../api/trades";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { uploadScreenshot } from "../helpers/uploadScreenshot";
 
 const SESSIONS = ["לונדון", "ניו-יורק"] as const;
 const PAIRS = ["EUR-USD", "GBP-USD"] as const;
@@ -96,23 +97,31 @@ export default function TradeForm({ onSuccess }: { onSuccess?: () => void }) {
       setSnack({ open: true, message: "יש לבחור תאריך", severity: "error" });
       return;
     }
-    const payload = {
-      date: (values.date as Date).toISOString(),
-      session: values.session,
-      pair: values.pair,
-      trendMain: values.trendMain,
-      trendSecondary: values.trendSecondary,
-      tfBlock: values.tfBlock,
-      tfEntry: values.tfEntry,
-      tradeType: values.tradeType,
-      rr: values.rr || undefined,
-      result: values.result,
-      notes: values.notes || undefined,
-      // screenshot upload is not wired yet
-      screenshotUrl: undefined as string | undefined,
-    } as const;
+    let screenshotUrl: string | undefined;
+    let screenshotId: string | undefined;
 
     try {
+      if (values.screenshot?.[0]) {
+        const up = await uploadScreenshot(values.screenshot[0]);
+        screenshotUrl = up.secure_url;
+        screenshotId = up.public_id; // save this too!
+      }
+
+      const payload = {
+        date: (values.date as Date).toISOString(),
+        session: values.session,
+        pair: values.pair,
+        trendMain: values.trendMain,
+        trendSecondary: values.trendSecondary,
+        tfBlock: values.tfBlock,
+        tfEntry: values.tfEntry,
+        tradeType: values.tradeType,
+        rr: values.rr || undefined,
+        result: values.result,
+        notes: values.notes || undefined,
+        screenshotUrl,
+        screenshotId, // <-- add to your schema/model
+      } as const;
       await createTrade(payload as any);
       onSuccess?.();
       reset(
