@@ -104,7 +104,7 @@ export default function TradeForm({ onSuccess }: { onSuccess?: () => void }) {
       if (values.screenshot?.[0]) {
         const up = await uploadScreenshot(values.screenshot[0]);
         screenshotUrl = up.secure_url;
-        screenshotId = up.public_id; // save this too!
+        screenshotId = up.public_id;
       }
 
       const payload = {
@@ -120,9 +120,9 @@ export default function TradeForm({ onSuccess }: { onSuccess?: () => void }) {
         result: values.result,
         notes: values.notes || undefined,
         screenshotUrl,
-        screenshotId, // <-- add to your schema/model
+        screenshotId,
       } as const;
-      await createTrade(payload as any);
+      await createTrade(payload);
       onSuccess?.();
       reset(
         {

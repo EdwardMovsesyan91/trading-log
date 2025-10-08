@@ -38,15 +38,6 @@ function formatDate(iso: string) {
   }
 }
 
-/** If the url is a Cloudinary upload URL, inject a small thumbnail transform.
- * Example: …/upload/ → …/upload/f_auto,q_auto,w_300,h_170,c_fill/
- */
-function toThumb(url: string, t = "f_auto,q_auto,w_300,h_170,c_fill") {
-  return url.includes("/upload/")
-    ? url.replace("/upload/", `/upload/${t}/`)
-    : url;
-}
-
 export default function TradeHistoryCard({
   trade,
   onDelete,
@@ -163,13 +154,15 @@ export default function TradeHistoryCard({
           {hasImage && (
             <Box
               component="img"
-              src={toThumb(fullImageUrl)}
-              alt="תמונת עסקה"
+              src={trade.screenshotUrl}
+              alt="Trade screenshot"
               sx={{
-                maxWidth: "100%",
-                maxHeight: "80vh",
-                display: "block",
-                m: "auto",
+                width: "100%",
+                height: "auto",
+                maxHeight: 400, // optional limit
+                objectFit: "contain",
+                borderRadius: 2,
+                cursor: "pointer",
               }}
             />
           )}
