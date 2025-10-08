@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "../api/config";
+
 async function downscaleToWebP(file: File, maxW = 1280, quality = 0.65) {
   // Create an image from the file
   const img = document.createElement("img");
@@ -28,7 +30,7 @@ export async function uploadScreenshot(file: File) {
   const smallFile = await downscaleToWebP(file, 1280, 0.65);
 
   // 🧠 Step 2: request upload signature from backend
-  const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+  const API = API_BASE_URL || "http://localhost:4000";
   const sig = await fetch(`${API}/api/trades/signature?folder=trades`).then(
     (r) => r.json()
   );
