@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import TradeFilters, { type TradeFiltersValue } from "./TradeFilters";
-import MetricsBar from "./MetricsBar";
+import { type TradeFiltersValue } from "./TradeFilters";
 import TradeHistoryCard from "./TradeHistoryCard";
 import type { Trade } from "../../types/trade";
 
@@ -24,7 +23,7 @@ export default function TradeHistoryList({
   onDelete?: (id: string) => void;
   title?: string;
 }) {
-  const [filters, setFilters] = React.useState<TradeFiltersValue>({
+  const [filters] = React.useState<TradeFiltersValue>({
     sortBy: "dateDesc",
     from: null,
     to: null,

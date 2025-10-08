@@ -62,7 +62,6 @@ export default function TradeHistoryCard({
     "";
 
   const hasImage = Boolean(fullImageUrl);
-  const thumbUrl = hasImage ? toThumb(fullImageUrl) : "";
 
   const [open, setOpen] = React.useState(false);
 
@@ -164,7 +163,7 @@ export default function TradeHistoryCard({
           {hasImage && (
             <Box
               component="img"
-              src={fullImageUrl}
+              src={toThumb(fullImageUrl)}
               alt="תמונת עסקה"
               sx={{
                 maxWidth: "100%",
