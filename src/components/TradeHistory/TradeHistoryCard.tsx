@@ -39,7 +39,6 @@ const RESULTS = ["TP ✅", "SL ❌"] as const;
 
 // ===== compact inputs =====
 const CompactFieldSx = {
-  minWidth: 0,
   "& .MuiOutlinedInput-input": { py: 0.25, px: 1 },
   "& .MuiInputBase-input": { fontSize: 14 },
   "& .MuiInputLabel-root": { fontSize: 12 },
@@ -219,7 +218,7 @@ export default function TradeHistoryCard({
               {editing ? (
                 <CompactSelect
                   value={form.pair || ""}
-                  onChange={(e) => ch("pair", e.target.value as any)}
+                  onChange={(e) => ch("pair", e.target.value)}
                 >
                   {PAIRS.map((p) => (
                     <MenuItem key={p} value={p}>
@@ -237,7 +236,7 @@ export default function TradeHistoryCard({
               {editing ? (
                 <CompactSelect
                   value={form.result || ""}
-                  onChange={(e) => ch("result", e.target.value as any)}
+                  onChange={(e) => ch("result", e.target.value)}
                 >
                   {RESULTS.map((r) => (
                     <MenuItem key={r} value={r}>
@@ -347,9 +346,7 @@ export default function TradeHistoryCard({
                 <CompactTextField
                   type="date"
                   value={toDateInput(form.date)}
-                  onChange={(e) =>
-                    ch("date", fromDateInput(e.target.value) as any)
-                  }
+                  onChange={(e) => ch("date", fromDateInput(e.target.value))}
                   InputLabelProps={{ shrink: true }}
                 />
               }
@@ -362,7 +359,7 @@ export default function TradeHistoryCard({
               input={
                 <CompactSelect
                   value={form.session || ""}
-                  onChange={(e) => ch("session", e.target.value as any)}
+                  onChange={(e) => ch("session", e.target.value)}
                 >
                   {SESSIONS.map((s) => (
                     <MenuItem key={s} value={s}>
@@ -380,7 +377,7 @@ export default function TradeHistoryCard({
               input={
                 <CompactSelect
                   value={form.tradeType || ""}
-                  onChange={(e) => ch("tradeType", e.target.value as any)}
+                  onChange={(e) => ch("tradeType", e.target.value)}
                 >
                   {TRADE_TYPES.map((t) => (
                     <MenuItem key={t} value={t}>
@@ -399,7 +396,7 @@ export default function TradeHistoryCard({
                 <CompactTextField
                   type="text"
                   value={form.rr ?? ""}
-                  onChange={(e) => ch("rr", e.target.value as any)}
+                  onChange={(e) => ch("rr", e.target.value)}
                 />
               }
             />
@@ -411,7 +408,7 @@ export default function TradeHistoryCard({
               input={
                 <CompactSelect
                   value={form.trendMain || ""}
-                  onChange={(e) => ch("trendMain", e.target.value as any)}
+                  onChange={(e) => ch("trendMain", e.target.value)}
                 >
                   {TREND_MAIN.map((t) => (
                     <MenuItem key={t} value={t}>
@@ -429,7 +426,7 @@ export default function TradeHistoryCard({
               input={
                 <CompactSelect
                   value={form.trendSecondary || ""}
-                  onChange={(e) => ch("trendSecondary", e.target.value as any)}
+                  onChange={(e) => ch("trendSecondary", e.target.value)}
                 >
                   {TREND_SECONDARY.map((t) => (
                     <MenuItem key={t} value={t}>
@@ -447,7 +444,7 @@ export default function TradeHistoryCard({
               input={
                 <CompactSelect
                   value={form.tfBlock || ""}
-                  onChange={(e) => ch("tfBlock", e.target.value as any)}
+                  onChange={(e) => ch("tfBlock", e.target.value)}
                 >
                   {TF_BLOCK.map((t) => (
                     <MenuItem key={t} value={t}>
@@ -465,7 +462,7 @@ export default function TradeHistoryCard({
               input={
                 <CompactSelect
                   value={form.tfEntry || ""}
-                  onChange={(e) => ch("tfEntry", e.target.value as any)}
+                  onChange={(e) => ch("tfEntry", e.target.value)}
                 >
                   {TF_ENTRY.map((t) => (
                     <MenuItem key={t} value={t}>
@@ -488,7 +485,7 @@ export default function TradeHistoryCard({
                 multiline
                 minRows={2}
                 value={form.notes || ""}
-                onChange={(e) => ch("notes", e.target.value as any)}
+                onChange={(e) => ch("notes", e.target.value)}
                 InputProps={{
                   sx: {
                     fontSize: 14,
