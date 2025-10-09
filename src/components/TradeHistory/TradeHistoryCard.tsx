@@ -225,7 +225,6 @@ export default function TradeHistoryCard({
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
-              {/* Pair: select in edit, h6 in view (no label in edit) */}
               {editing ? (
                 <CompactSelect
                   value={form.pair || ""}
