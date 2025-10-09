@@ -20,4 +20,5 @@ export interface Trade {
   result: TradeResult;
   notes?: string;
   screenshotUrl?: string;
+  screenshotId?: string;
 }

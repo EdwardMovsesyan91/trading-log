@@ -29,7 +29,6 @@ export default function TradeHistoryList({
     to: null,
   });
 
-  // 1) filter
   const filtered = React.useMemo(() => {
     return trades.filter((t) => {
       if (filters.session && t.session !== filters.session) return false;
@@ -42,7 +41,6 @@ export default function TradeHistoryList({
     });
   }, [trades, filters]);
 
-  // 2) sort
   const items = React.useMemo(() => {
     const arr = [...filtered];
     switch (filters.sortBy) {
@@ -60,7 +58,6 @@ export default function TradeHistoryList({
         );
         break;
       case "result":
-        // TP before SL, then newest first
         arr.sort((a, b) => {
           const ra = a.result.startsWith("TP") ? 0 : 1;
           const rb = b.result.startsWith("TP") ? 0 : 1;
@@ -79,9 +76,6 @@ export default function TradeHistoryList({
       <Stack sx={{ margin: "0 22px 22px 0" }}>
         <Typography variant="h5">{title}</Typography>
       </Stack>
-
-      {/* <TradeFilters value={filters} onChange={setFilters} />
-      <MetricsBar items={items} /> */}
 
       <Stack gap={2}>
         {items.map((t) => (

@@ -97,16 +97,25 @@ export default function TradeForm({ onSuccess }: { onSuccess?: () => void }) {
       setSnack({ open: true, message: "יש לבחור תאריך", severity: "error" });
       return;
     }
+
     let screenshotUrl: string | undefined;
     let screenshotId: string | undefined;
 
     try {
-      if (values.screenshot?.[0]) {
-        const up = await uploadScreenshot(values.screenshot[0]);
-        screenshotUrl = up.secure_url;
-        screenshotId = up.public_id;
+      // 1) Upload image if provided
+      const file = values.screenshot?.[0];
+      if (file) {
+        const up: any = await uploadScreenshot(file);
+        // support both new ({secureUrl, publicId}) and old ({secure_url, public_id}) shapes
+        screenshotUrl = up.secureUrl ?? up.secure_url ?? up.raw?.secure_url;
+        screenshotId = up.publicId ?? up.public_id ?? up.raw?.public_id;
+
+        if (!screenshotUrl || !screenshotId) {
+          throw new Error("Upload succeeded but missing URL/ID from response");
+        }
       }
 
+      // 2) Build payload and create trade
       const payload = {
         date: (values.date as Date).toISOString(),
         session: values.session,
@@ -122,8 +131,11 @@ export default function TradeForm({ onSuccess }: { onSuccess?: () => void }) {
         screenshotUrl,
         screenshotId,
       } as const;
+
       await createTrade(payload);
       onSuccess?.();
+
+      // 3) Reset form and show success
       reset(
         {
           date: null,
