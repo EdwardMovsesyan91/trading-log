@@ -17,6 +17,7 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  type SelectChangeEvent,
 } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
@@ -26,6 +27,16 @@ import TradeResultChip from "./TradeResultChip";
 import type { Trade } from "../../types/trade";
 import { updateTrade } from "../../api/trades";
 import { uploadScreenshot } from "../../helpers/uploadScreenshot";
+
+type CompactSelectProps<T extends string> = React.PropsWithChildren<{
+  label?: string;
+  value: T | "";
+  onChange: (e: SelectChangeEvent<T>) => void;
+}> &
+  Omit<
+    React.ComponentProps<typeof Select<T>>,
+    "value" | "onChange" | "label" | "size" | "variant"
+  >;
 
 // ===== options =====
 const SESSIONS = ["לונדון", "ניו-יורק"] as const;
@@ -51,11 +62,11 @@ function CompactTextField(props: any) {
 }
 
 // InputLabel is optional now; if no label passed → no label rendered
-function CompactSelect({
+function CompactSelect<T extends string>({
   label,
   children,
   ...rest
-}: React.PropsWithChildren<{ label?: string } & any>) {
+}: CompactSelectProps<T>) {
   return (
     <FormControl size="small" sx={{ minWidth: 0, ...CompactFieldSx }}>
       {label ? <InputLabel sx={{ fontSize: 12 }}>{label}</InputLabel> : null}
