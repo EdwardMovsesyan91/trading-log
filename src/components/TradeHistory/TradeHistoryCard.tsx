@@ -28,6 +28,8 @@ import type { Trade } from "../../types/trade";
 import { updateTrade } from "../../api/trades";
 import { uploadScreenshot } from "../../helpers/uploadScreenshot";
 
+type InputEvt = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+
 type CompactSelectProps<T extends string> = React.PropsWithChildren<{
   label?: string;
   value: T | "";
@@ -356,7 +358,9 @@ export default function TradeHistoryCard({
                 <CompactTextField
                   type="date"
                   value={toDateInput(form.date)}
-                  onChange={(e) => ch("date", fromDateInput(e.target.value))}
+                  onChange={(e: InputEvt) =>
+                    ch("date", fromDateInput(e.target.value))
+                  }
                   InputLabelProps={{ shrink: true }}
                 />
               }
@@ -406,7 +410,7 @@ export default function TradeHistoryCard({
                 <CompactTextField
                   type="text"
                   value={form.rr ?? ""}
-                  onChange={(e) => ch("rr", e.target.value)}
+                  onChange={(e: InputEvt) => ch("rr", e.target.value)}
                 />
               }
             />
@@ -495,7 +499,7 @@ export default function TradeHistoryCard({
                 multiline
                 minRows={2}
                 value={form.notes || ""}
-                onChange={(e) => ch("notes", e.target.value)}
+                onChange={(e: InputEvt) => ch("notes", e.target.value)}
                 InputProps={{
                   sx: {
                     fontSize: 14,
